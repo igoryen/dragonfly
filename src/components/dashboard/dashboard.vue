@@ -5,6 +5,19 @@
     </div>
 </template>
 
+<script>
+import axios from 'axios';
+export default {
+    created() {
+        const db = 'https://dragonfly-b227a.firebaseio.com/users.json';
+        axios
+            .get(db)
+            .then(res => console.log(res))
+            .catch(error => console.log(error))
+    }
+}
+</script>
+
 <style scoped>
 h1,
 p {
