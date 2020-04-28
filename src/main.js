@@ -5,6 +5,8 @@ import store from './store'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'https://dragonfly-b227a.firebaseio.com';
+axios.defaults.headers.common['Authorization'] = 'agenerictoken';
+axios.defaults.headers.get['Accepts'] = 'application/json';
 
 Vue.config.productionTip = false
 
