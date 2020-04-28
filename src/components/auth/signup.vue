@@ -82,7 +82,7 @@ export default {
             );
         },
         onSubmit() {
-            const db = 'https://dragonfly-b227a.firebaseio.com/users.json';
+            const db = '/users.json';
             const formData = {
                 email: this.email,
                 age: this.age,

@@ -15,7 +15,7 @@ export default {
         }
     },
     created() {
-        const db = 'https://dragonfly-b227a.firebaseio.com/users.json';
+        const db = '/users.json';
         axios
             .get(db)
             .then(res => {
