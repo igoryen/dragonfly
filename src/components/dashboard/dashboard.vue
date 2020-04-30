@@ -7,21 +7,21 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
     data() {
         return {
-            email: ''
-        }
+            email: ""
+        };
     },
     created() {
-        const db = '/users.json';
+        const db = "/users.json";
         axios
             .get(db)
             .then(res => {
                 const data = res.data;
                 const users = [];
-                for(let key in data) {
+                for (let key in data) {
                     const user = data[key];
                     user.id = key;
                     users.push(user);
@@ -29,9 +29,9 @@ export default {
                 console.log(users);
                 this.email = users[0].email;
             })
-            .catch(error => console.log(error))
+            .catch(error => console.log(error));
     }
-}
+};
 </script>
 
 <style scoped>

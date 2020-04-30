@@ -9,22 +9,22 @@ axios.defaults.baseURL = 'https://dragonfly-b227a.firebaseio.com';
 axios.defaults.headers.get['Accepts'] = 'application/json';
 
 const req_icr = axios.interceptors.request.use(config => {
-  console.log('Req interceptor', config);
-  return config;
+    console.log('Req interceptor', config);
+    return config;
 });
 
 const res_icr = axios.interceptors.response.use(res => {
-  console.log('Res interceptor', res);
-  return res;
+    console.log('Res interceptor', res);
+    return res;
 });
 
-axios.interceptors.request.eject( req_icr );
-axios.interceptors.request.eject( res_icr );
+axios.interceptors.request.eject(req_icr);
+axios.interceptors.request.eject(res_icr);
 
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

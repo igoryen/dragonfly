@@ -56,7 +56,7 @@
 
 <script>
 // import axios from 'axios';
-import axios from '../../axios-auth';
+import axios from "../../axios-auth";
 
 export default {
     data() {
@@ -85,9 +85,9 @@ export default {
         },
         onSubmit() {
             // const db = '/users.json';
-            const action="signUp";
-            const apikey="AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
-            const db = '/accounts:' + action + '?key=' + apikey;
+            const action = "signUp";
+            const apikey = "AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
+            const db = "/accounts:" + action + "?key=" + apikey;
 
             const formData = {
                 email: this.email,
@@ -108,7 +108,7 @@ export default {
             axios
                 .post(db, obj)
                 .then(res => console.log(res))
-                .catch(error => console.log(error))
+                .catch(error => console.log(error));
         }
     }
 };
