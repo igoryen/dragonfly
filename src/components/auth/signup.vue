@@ -85,8 +85,9 @@ export default {
         },
         onSubmit() {
             // const db = '/users.json';
+            const action="signUp";
             const apikey="AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
-            const db = '/accounts:signUp?key=' + apikey;
+            const db = '/accounts:' + action + '?key=' + apikey;
 
             const formData = {
                 email: this.email,
@@ -103,7 +104,7 @@ export default {
                 // token: apikey,
                 returnSecureToken: true
             };
-            console.log(">>--->", obj);
+            console.log("Sign up: ", obj);
             axios
                 .post(db, obj)
                 .then(res => console.log(res))

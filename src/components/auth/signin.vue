@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import axios from '../../axios-auth';
 export default {
     data() {
         return {
@@ -28,11 +29,24 @@ export default {
     },
     methods: {
         onSubmit() {
+            const action="signInWithPassword";
+            const apikey="AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
+            const db = '/accounts:' + action + '?key=' + apikey;
             const formData = {
                 email: this.email,
                 password: this.password
             };
-            console.log(formData);
+            const obj = {
+                email: formData.email,
+                password: formData.password,
+                // token: apikey,
+                returnSecureToken: true
+            };
+            console.log("Sign in: ", formData);
+            axios
+                .post(db, obj)
+                .then(res => console.log(res))
+                .catch(error => console.log(error))
         }
     }
 };
