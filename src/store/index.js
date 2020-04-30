@@ -10,6 +10,10 @@ export default new Vuex.Store({
         userId: null
     },
     mutations: {
+        authUser(state, userData) {
+            state.idToken = userData.token,
+            state.userId = userData.userId
+        }
     },
     actions: {
         // eslint-disable-next-line
@@ -23,7 +27,13 @@ export default new Vuex.Store({
             };
             axios
                 .post(db, obj)
-                .then(res => console.log(res))
+                .then(res => {
+                    console.log("signup: ", res),
+                    commit('authUser', {
+                        token: res.data.idToken,
+                        userId: res.data.localId
+                    })
+                })
                 .catch(error => console.log(error));
         },
         // eslint-disable-next-line
@@ -37,7 +47,13 @@ export default new Vuex.Store({
             };
             axios
                 .post(db, obj)
-                .then(res => console.log(res))
+                .then(res => {
+                    console.log(res),
+                    commit('authUser', {
+                        token: res.data.idToken,
+                        userId: res.data.localId
+                    })
+                })
                 .catch(error => console.log(error));
         }
     },
