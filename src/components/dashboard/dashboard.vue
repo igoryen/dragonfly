@@ -2,18 +2,21 @@
     <div id="dashboard">
         <h1>That's the dashboard!</h1>
         <p>You should only get here if you're authenticated!</p>
-        <p>Your email address: {{ email }}</p>
+        <p v-if="email">Your email address: {{ email }}</p>
     </div>
 </template>
 
 <script>
+// import axios from 'axios';
 export default {
-    data() {
-        return {
-            email: ""
-        };
+    computed: {
+        email() {
+            return !this.$store.getters.user ? false : this.$store.getters.user.email
+        }
     },
-    created() {}
+    created() {
+        this.$store.dispatch('fetchUser')
+    }
 };
 </script>
 

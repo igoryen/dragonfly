@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from '../axios-auth'
+import globalAxios from 'axios'
 
 Vue.use(Vuex)
-
-import axios from "../axios-auth";
-import globalAxios from 'axios';
 
 export default new Vuex.Store({
     state: {
@@ -14,7 +13,7 @@ export default new Vuex.Store({
     },
     mutations: {
         authUser(state, userData) {
-            state.idToken = userData.token,
+            state.idToken = userData.token
             state.userId = userData.userId
         },
         storeUser(state, user) {
@@ -22,14 +21,14 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        // eslint-disable-next-line
         signup({ commit, dispatch }, authData) {
             const action = "signUp";
             const apikey = "AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
             const db = "/accounts:" + action + "?key=" + apikey;
             const obj = {
                 email: authData.email,
-                password: authData.password
+                password: authData.password,
+                returnSecureToken: true
             };
             axios
                 .post(db, obj)
@@ -43,19 +42,19 @@ export default new Vuex.Store({
                 })
                 .catch(error => console.log(error));
         },
-        // eslint-disable-next-line
         login({ commit }, authData) {
             const action = "signInWithPassword";
             const apikey = "AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
             const db = "/accounts:" + action + "?key=" + apikey;
             const obj = {
                 email: authData.email,
-                password: authData.password
+                password: authData.password,
+                returnSecureToken: true
             };
             axios
                 .post(db, obj)
                 .then(res => {
-                    console.log(res),
+                    console.log("login res: ", res),
                     commit('authUser', {
                         token: res.data.idToken,
                         userId: res.data.localId
@@ -68,21 +67,19 @@ export default new Vuex.Store({
             if( !state.idToken){
                 return
             }
-            const db = "/users.json";
             globalAxios
-                .post(db + '?auth=' + state.idToken, userData)
+                .post('/users.json' + '?auth=' + state.idToken, userData)
                 .then(res => console.log('storeUser: ', res))
                 .catch(error => console.log('storeUser error: ', error ))
         },
-        // eslint-disable-next-line
         fetchUser({commit, state}) {
             if( !state.idToken){
                 return
             }
-            const db = "/users.json";
             globalAxios
-                .get(db + '?auth=' + state.idToken)
+                .get('/users.json' + '?auth=' + state.idToken)
                 .then(res => {
+                    console.log("fetchUser res: ", res);
                     const data = res.data;
                     const users = [];
                     for (let key in data) {
@@ -90,8 +87,8 @@ export default new Vuex.Store({
                         user.id = key;
                         users.push(user);
                     }
-                    console.log(users);
-                    this.commit('storeUser', users[0])
+                    console.log("fetchUser users: ", users);
+                    commit('storeUser', users[0])
                 })
                 .catch(error => console.log(error));
         }
@@ -100,7 +97,5 @@ export default new Vuex.Store({
         user(state){
             return state.user
         }
-    },
-    modules: {
     }
 })
