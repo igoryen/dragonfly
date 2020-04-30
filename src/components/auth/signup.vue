@@ -84,7 +84,10 @@ export default {
             );
         },
         onSubmit() {
-            const db = '/users.json';
+            // const db = '/users.json';
+            const apikey="AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
+            const db = '/accounts:signUp?key=' + apikey;
+
             const formData = {
                 email: this.email,
                 age: this.age,
@@ -94,9 +97,15 @@ export default {
                 hobbies: this.hobbyInputs.map(hobby => hobby.value),
                 terms: this.terms
             };
-            console.log(">>--->" + formData);
+            const obj = {
+                email: formData.email,
+                password: formData.password,
+                // token: apikey,
+                returnSecureToken: true
+            };
+            console.log(">>--->", obj);
             axios
-                .post(db, formData)
+                .post(db, obj)
                 .then(res => console.log(res))
                 .catch(error => console.log(error))
         }

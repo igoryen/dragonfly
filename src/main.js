@@ -5,7 +5,7 @@ import store from './store'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'https://dragonfly-b227a.firebaseio.com';
-axios.defaults.headers.common['Authorization'] = 'agenerictoken';
+// axios.defaults.headers.common['Authorization'] = 'agenerictoken';
 axios.defaults.headers.get['Accepts'] = 'application/json';
 
 const req_icr = axios.interceptors.request.use(config => {
