@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,15 @@ const routes = [
     },
     { 
         path: '/dashboard', 
-        component: () => import('../components/dashboard/dashboard.vue') 
+        component: () => import('../components/dashboard/dashboard.vue'),
+        beforeEnter(to, from, next) {
+            if(store.state.idToken){ // #10
+                next() // #20
+            }
+            else {
+                next('/signin') // # 50
+            }
+        }
     }
 ]
 
@@ -29,3 +38,8 @@ const router = new VueRouter({
 })
 
 export default router
+/**
+ * #10. if the token exists and is valid
+ * #20. then continue navigation
+ * #50. then redirect to the sign-in page
+ */
