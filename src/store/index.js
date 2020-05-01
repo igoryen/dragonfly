@@ -96,6 +96,14 @@ export default new Vuex.Store({
     getters:{
         user(state){
             return state.user
+        },
+        isAuthenticated(state){
+            console.log("isAuthenticated: ", !!state.idToken)
+            return state.idToken !== null // #10
         }
     }
 })
+
+/**
+ * #10 - return 'true' if idToken is not empty
+ */

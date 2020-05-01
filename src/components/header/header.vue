@@ -5,19 +5,33 @@
         </div>
         <nav>
             <ul>
-                <li>
+                <li v-if="!autnt">
                     <router-link to="/signup">Sign Up</router-link>
                 </li>
-                <li>
+                <li v-if="!autnt">
                     <router-link to="/signin">Sign In</router-link>
                 </li>
-                <li>
+                <li v-if="autnt">
                     <router-link to="/dashboard">Dashboard</router-link>
                 </li>
             </ul>
         </nav>
     </header>
 </template>
+
+<script>
+export default {
+    computed: {
+        autnt(){ // #10
+            return this.$store.getters.isAuthenticated
+        }
+    }
+}
+/**
+ * #10 - autnt = authenticate
+ * autrz = authorize
+ */
+</script>
 
 <style scoped>
 #header {
