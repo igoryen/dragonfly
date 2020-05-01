@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../axios-auth'
 import globalAxios from 'axios'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,10 @@ export default new Vuex.Store({
         },
         storeUser(state, user) {
             state.user = user
+        },
+        clearAutntData(state){
+            state.idToken = null;
+            state.userId = null;
         }
     },
     actions: {
@@ -61,6 +66,11 @@ export default new Vuex.Store({
                     })
                 })
                 .catch(error => console.log(error));
+        },
+        logout({commit}){
+            commit('clearAutntData');
+            router.replace('/signin');
+            console.log('logged out and rerouted');
         },
         // eslint-disable-next-line
         storeUser({commit, state}, userData) {
