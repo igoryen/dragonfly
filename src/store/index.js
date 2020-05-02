@@ -26,6 +26,14 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        setLogoutTimer({commit}, expirationTime){
+            const time = expirationTime * 1000;
+            console.log('LogoutTimer is set to ' + (time / 60000) + ' minutes')
+            setTimeout(() => {
+                commit('clearAutntData')
+                console.log('time out! auto-logged out')
+            }, time)
+        },
         signup({ commit, dispatch }, authData) {
             const action = "signUp";
             const apikey = "AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
@@ -44,10 +52,11 @@ export default new Vuex.Store({
                         userId: res.data.localId
                     }),
                     dispatch('storeUser', authData)
+                    dispatch('setLogoutTimer', res.data.expiresIn)
                 })
                 .catch(error => console.log(error));
         },
-        login({ commit }, authData) {
+        login({ commit, dispatch }, authData) {
             const action = "signInWithPassword";
             const apikey = "AIzaSyDrD9G2hq0yNq5lVB38IKCnfqHYU6jTIq4";
             const db = "/accounts:" + action + "?key=" + apikey;
@@ -64,13 +73,14 @@ export default new Vuex.Store({
                         token: res.data.idToken,
                         userId: res.data.localId
                     })
+                    dispatch('setLogoutTimer', res.data.expiresIn)
                 })
                 .catch(error => console.log(error));
         },
         logout({commit}){
             commit('clearAutntData');
             router.replace('/signin');
-            console.log('logged out and rerouted');
+            console.log('manually logged out and rerouted');
         },
         // eslint-disable-next-line
         storeUser({commit, state}, userData) {
