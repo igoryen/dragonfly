@@ -88,7 +88,10 @@ export default {
             required: required,
             email: email,
             unique: val => {
-                return val !== 'qqq@gmail.com'
+                if (val === '' ) return true // #05
+                return new Promise((resolve/*, reject*/) => {
+                    setTimeout( () => { resolve( val !== 'qqq@gmail.com') }, 1000 )
+                })
             }
         },
         age: {
@@ -150,6 +153,7 @@ export default {
     }
 };
 /**
+ * #05 - 'empty' is fine, b/c 'required' will take care of 'empty'
  * #10 - tou = terms of use
  * #20 - requiredUnless is not functioning as described by Max Schwarzmueller
  */
