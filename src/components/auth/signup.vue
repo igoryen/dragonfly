@@ -53,7 +53,7 @@
                     <label for="terms">Accept Terms of Use</label>
                 </div>
                 <div class="submit">
-                    <button type="submit">Submit</button>
+                    <button type="submit" :disabled="$v.$invalid">Submit</button>
                 </div>
             </form>
         </div>
@@ -61,7 +61,15 @@
 </template>
 
 <script>
-import { required, email, numeric, minValue, minLength, sameAs, requiredUnless } from 'vuelidate/lib/validators'
+import {
+    required,
+    email,
+    numeric,
+    minValue,
+    minLength,
+    sameAs,
+    // requiredUnless
+} from 'vuelidate/lib/validators'
 export default {
     data() {
         return {
@@ -71,7 +79,8 @@ export default {
             confirmPassword: "",
             country: "usa",
             hobbyInputs: [],
-            terms: false
+            terms: false,
+            // tou: false
         };
     },
     validations: {
@@ -94,11 +103,10 @@ export default {
                 return vm.password
             })
         },
-        tou: { // #10
-            // eslint-disable-next-line
-            required: requiredUnless(vm =>{
-                return vm.country === 'germany'
-            })
+        tou: { // #10, #20
+            // required: requiredUnless(vm =>{
+            //     return vm.country !== 'germany'
+            // })
         },
         hobbyInputs: {
             required,
@@ -140,6 +148,7 @@ export default {
 };
 /**
  * #10 - tou = terms of use
+ * #20 - requiredUnless is not functioning as described by Max Schwarzmueller
  */
 </script>
 
